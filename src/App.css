@@ -1,0 +1,136 @@
+html {
+  background-color: #222;
+}
+
+.App {
+  text-align: center;
+  color: white;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  padding: 20px 20px 0;
+  color: white;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+  margin-top: 0;
+}
+
+.form {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 20px;
+  width: 100%;
+  margin: auto;
+  text-align: left;
+}
+
+.form .container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 2%;
+}
+
+.form input:focus,
+.form input:visited,
+.form input:hover,
+.form input:active,
+.form input, .form select, .form textarea {
+  background: transparent;
+  color: white;
+  padding: 0 6px 6px;
+  border: 1px solid;
+  border-top: none;
+  border-right: none;
+  outline: none;
+  font-size: 16px;
+  /*transition: ease-in-out all .2s;*/
+  margin: 15px 0 2px;
+}
+
+/*.form input:focus {
+  padding: 0 6px 2px;
+  font-size: 19px;
+}*/
+
+.form input[type=submit] {
+  border: 1px solid;
+  padding: 10px 70px;
+
+}
+
+.form input[type=file], .form input[type=color] {
+  border: none;
+  padding: 0;
+}
+
+.form input[required], .form input:required {
+
+}
+
+.form select {
+  background: transparent;
+  color: white;
+  padding: 6px 10px;
+}
+
+.form select option {
+  color: black;
+}
+
+.form .text-alert {
+  font-size: 12px;
+  color: #f44336;
+  font-weight: bold;
+  margin-bottom: -12px;
+  display: block;
+}
+
+.form .level {
+  margin-left: 20px;
+  width: 100%;
+}
+
+.form .level:before {
+  margin-right: 10px;
+  content: '»';
+}
+
+.form .width {
+  width: 100%;
+}
+
+.form .submit-container {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  margin: auto;
+  text-align: center;
+}
+
+.btn-mini {
+  background-color: transparent;
+  border: 1px solid white;
+  color: white;
+  padding: 6px 12px !important;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
