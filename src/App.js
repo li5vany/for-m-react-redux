@@ -9,7 +9,7 @@ const App = ({formReactReduxChangeFieldValue, formReactReduxUndo, formReactRedux
   <div className="App">
     <header className="App-header">
       <img src={logo} className="App-logo" alt="logo"/>
-      <h1 className="App-title">Welcome to Form-React-Redux</h1>
+      <h1 className="App-title">Welcome to for-m-react-redux</h1>
     </header>
 
     <h3>Simple Form</h3>

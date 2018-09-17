@@ -1,4 +1,4 @@
-# form-react-redux
+# for-m-react-redux
 
 Ease way to build fast and simple forms in react isomorphic application.
 
