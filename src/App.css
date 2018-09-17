@@ -3,8 +3,9 @@ html {
 }
 
 .App {
-  text-align: center;
   color: white;
+  width: 50%;
+  margin: auto;
 }
 
 .App-logo {
@@ -13,6 +14,7 @@ html {
 }
 
 .App-header {
+  text-align: center;
   background-color: #222;
   padding: 20px 20px 0;
   color: white;
@@ -25,6 +27,44 @@ html {
 .App-intro {
   font-size: large;
   margin-top: 0;
+}
+
+button {
+  background: transparent;
+  color: white;
+  border: 1px solid;
+  padding: 4px 16px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+form {
+  display: block;
+  margin-bottom: 60px;
+}
+
+form > * {
+  width: 100%;
+  float: left;
+}
+
+form input[type=submit] {
+  width: 50%;
+  margin-left: 25% !important;
+  cursor: pointer;
+}
+
+form span {
+  text-align: left;
+}
+
+form:before, form:after {
+  display: table;
+  content: " ";
+}
+
+form:after {
+  clear: both;
 }
 
 .form {
@@ -46,7 +86,12 @@ html {
 .form input:visited,
 .form input:hover,
 .form input:active,
-.form input, .form select, .form textarea {
+.form input, .form select, .form textarea,
+form input:focus,
+form input:visited,
+form input:hover,
+form input:active,
+form input, form select, form textarea {
   background: transparent;
   color: white;
   padding: 0 6px 6px;
@@ -59,18 +104,14 @@ html {
   margin: 15px 0 2px;
 }
 
-/*.form input:focus {
-  padding: 0 6px 2px;
-  font-size: 19px;
-}*/
-
-.form input[type=submit] {
+.form input[type=submit], form input[type=submit] {
   border: 1px solid;
   padding: 10px 70px;
 
 }
 
-.form input[type=file], .form input[type=color] {
+.form input[type=file], .form input[type=color],
+form input[type=file], form input[type=color] {
   border: none;
   padding: 0;
 }
@@ -79,17 +120,17 @@ html {
 
 }
 
-.form select {
+.form select, form select {
   background: transparent;
   color: white;
   padding: 6px 10px;
 }
 
-.form select option {
+.form select option, form select option {
   color: black;
 }
 
-.form .text-alert {
+.form .text-alert, form .text-alert {
   font-size: 12px;
   color: #f44336;
   font-weight: bold;
@@ -112,7 +153,7 @@ html {
 }
 
 .form .submit-container {
-  position: absolute;
+  position: relative;
   bottom: 10px;
   width: 100%;
   margin: auto;
@@ -132,5 +173,11 @@ html {
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 767px) {
+  .App {
+    width: 90%;
   }
 }

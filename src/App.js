@@ -2,150 +2,172 @@ import React from 'react';
 import {connect} from 'react-redux';
 import * as types from './types';
 import logo from './logo.svg';
-import FormReactRedux, {getValueFromFormReactRedux, getUniqueKey} from './FormReactRedux';
+import FormReactRedux from './FormReactRedux';
 import './App.css';
 
-const App = ({formReactRedux, formReactReduxChangeFieldValue, formReactReduxUndo, formReactReduxRedo, formReactReduxReset}) => {
+const App = ({formReactReduxChangeFieldValue, formReactReduxUndo, formReactReduxRedo, formReactReduxReset}) => (
+  <div className="App">
+    <header className="App-header">
+      <img src={logo} className="App-logo" alt="logo"/>
+      <h1 className="App-title">Welcome to Form-React-Redux</h1>
+    </header>
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo"/>
-        <h1 className="App-title">Welcome to Form-React-Redux</h1>
-      </header>
-      <FormReactRedux formName="form-to-test-values" submit={(values) => {
-        let defaultValues = {text: 'This is a text', radio: 'option-2', checkbox: true};
-        formReactReduxChangeFieldValue('form-test', values.name, values.value, defaultValues)
-      }}>
-        <input type="text" name="name" placeholder="Name"/>
-        <input type="text" name="value" placeholder="Value"/>
-        <input type="submit" className="btn-mini" value="Change"/>
-      </FormReactRedux>
-      {' '}
-      <button className="btn-mini" onClick={() => {
-        formReactReduxUndo("form-test")
-      }}>Undo
-      </button>
-      {' '}
-      <button className="btn-mini" onClick={() => {
-        formReactReduxRedo("form-test")
-      }}>Redo
-      </button>
-      {' '}
-      <button className="btn-mini" onClick={() => {
-        formReactReduxReset()
-      }}>Reset all
-      </button>
-      {' '}
-      <button className="btn-mini" onClick={() => {
-        formReactReduxReset("form-test")
-      }}>Reset form-test
-      </button>
-      <FormReactRedux
-        className="form"
-        formName="form-test"
-        defaultValues={{text: 'This is a text', radio: 'option-2', checkbox: true}}
-        language={{'This field is required': 'This field is required'}}
-        submit={
-          (values, e) => {
-            console.log(values);
-            alert(JSON.stringify(values));
-          }}
-        onChange={
-          (name, values, e) => {
-            // console.log(name, values, e)
-          }
-        }>
-        <div className="container">
-          Level 1 &nbsp;
-          <input name="text" placeholder="Text" required errormessage="Number, most be a number" onChange={(e) => {
-          }}/>
-          <div className="level">
-            <label>
-              <input type="radio" name="radio" value="option-1" noerrormessage="true"/>
-              &nbsp;Level 2 => Option 1
-            </label>&nbsp;&nbsp;&nbsp;
-            <label>
-              <input type="radio" name="radio" value="option-2" noerrormessage="true"/>
-              &nbsp;Level 2 => Option 2
-            </label>
-            <div className="level">
-              Level 3 &nbsp;&nbsp;
-              <input type="file" name="file"/>
-              <br/>
-              <div className="level">
-                <input type="checkbox" name="checkbox" noerrormessage="true"/> Level 4
-              </div>
-              <div className="level">
-                <span>Level 6</span> &nbsp;
-                <select name="select">
-                  <option value="Option-1">Option-1</option>
-                  <option value="Option-2">Option-2</option>
-                  <option value="Option-3">Option-3</option>
-                  <option value="Option-4">Option-4</option>
-                  <option value="Option-5">Option-5</option>
-                </select>
-                <div className="level">
-                  <span>Level 7</span> &nbsp;
-                  <textarea name="text-area" placeholder="Text Area" cols="15" rows="3"/>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="container">
-          <div><input type="number" name="number" placeholder="Number" className="width" required/></div>
-          <div><input type="email" name="email" placeholder="Email" className="width" required/></div>
-          <div><input type="password" name="password" placeholder="Password" className="width" required/></div>
-          <div><input type="tel" name="telephone" placeholder="(000) 000-0000" className="width"/></div>
-          <div><input type="url" name="url" placeholder="http://www.example.com/" className="width"/></div>
-          <div><input type="search" name="search" placeholder="Search" className="width"/></div>
-          <div><input type="range" name="range" placeholder="Range" className="width"/></div>
-          <div><input type="color" name="color" placeholder="Color" className="width"/></div>
-        </div>
-        <div className="container">
-          <div><input type="datetime" name="datetime" placeholder="Datetime" className="width"/></div>
-          <div><input type="datetime-local" name="datetime-local" placeholder="Datetime Local" className="width"/></div>
-          <div><input type="date" name="date" placeholder="Date" className="width"/></div>
-          <div><input type="month" name="month" placeholder="Month" className="width"/></div>
-          <div><input type="week" name="week" placeholder="Week" className="width"/></div>
-          <div><input type="time" name="time" placeholder="Time" className="width"/></div>
-          <input type="text" name="data-list" placeholder="Data List" list="data-list"/>
-          <datalist id="data-list">
-            <option>Accra, Ghana</option>
-            <option>Paris, France</option>
-            <option>Melbourne, Australia</option>
-            <option>Lima, Peru</option>
-            <option>Los Angeles, United Sates</option>
-            <option>Kuala Lumpur, Malaysia</option>
-          </datalist>
-        </div>
-        {formReactRedux && formReactRedux['form-test'] && <div className="container">
-          {(() => {
-            let values = formReactRedux['form-test'].values, array = [], errors = formReactRedux['form-test'].errors, validation = formReactRedux['form-test'].validation;
-            for (let i in values) {
-              array.push(
-                <span key={getUniqueKey()}>
-                  {i.toUpperCase()} <br/>&nbsp;&nbsp;Value: {values[i]}<br/>
-                  {validation && validation[i] && validation[i].required ? <span>&nbsp;&nbsp;Required: {validation[i].required.toString()}<br/></span> : ''}
-                  {validation && validation[i] && validation[i].pattern ? <span>&nbsp;&nbsp;Pattern: {validation[i].pattern.toString()}<br/></span> : ''}
-                  {validation && validation[i] && validation[i].regex ? <span>&nbsp;&nbsp;Regex: {validation[i].regex.toString()}<br/></span> : ''}
-                  {errors && errors[i] ? <span>&nbsp;&nbsp;ErrorMessage: {errors[i]}<br/></span> : ''}<br/>
-                </span>
-              );
-            }
-            return array;
-          })()}
-        </div>}
-        <div className="submit-container">
-          <input type="submit" value={"Submit " + (getValueFromFormReactRedux('form-test', formReactRedux, 'isValid', 'boolean', false) ? 'Enabled' : "Disabled")} disabled={!(getValueFromFormReactRedux('form-test', formReactRedux, 'isValid', 'boolean', false))}/>
-          {' '}
-          <input type="submit" value="Submit"/>
-        </div>
-      </FormReactRedux>
-    </div>
-  );
-};
+    <h3>Simple Form</h3>
+    <FormReactRedux
+      formName="simple-form"
+      defaultValues={{name: 'Ease way to build...'}}
+      submit={(values, e) => {
+        console.log('values: ', values);
+        // values: {name: 'Ease way to build...'}
+      }}
+    >
+      <input name="name" placeholder="Ease way to build..." required/>
+      <input type="submit" value="Submit"/>
+    </FormReactRedux>
+
+    <h3>Default validation messages</h3>
+    <FormReactRedux formName="default-validation-messages">
+      <input name="required" placeholder="Required" required/>
+      {/* display red message */}
+      {/* This field is required */}
+      <input type="number" name="number" placeholder="Number"/>
+      {/* This field most be number */}
+      <input type="email" name="email" placeholder="Email"/>
+      {/* This field most be email */}
+      <input type="submit" value="Submit"/>
+    </FormReactRedux>
+
+    <h3>Define validation messages</h3>
+    <h5>define new validation messages</h5>
+    <FormReactRedux
+      formName="define-validation-messages"
+      language={{"This field is required": "Este campo es obligatorio"}}
+    >
+      <input name="required" placeholder="Required" required/>
+      {/* Este campo es obligatorio */}
+      <input type="submit" value="Submit"/>
+    </FormReactRedux>
+
+    <h5>define one validation message</h5>
+    <FormReactRedux formName="define-one-validation-message">
+      <input name="name" placeholder="Required" required errormessage="Required"/>
+      {/* Required */}
+      <input type="submit" value="Submit"/>
+    </FormReactRedux>
+
+    <h3>Default input type validation</h3>
+    <FormReactRedux formName="default-input-type-validation">
+      <input type="email" name="email" placeholder="Email"/>
+      {/* This field most be email */}
+      <input type="number" name="number" placeholder="Number"/>
+      {/* This field most be number */}
+      <input type="url" name="url" placeholder="Url"/>
+      {/* This field most be url */}
+      <input type="submit" value="Submit"/>
+    </FormReactRedux>
+
+    <h3>Specify validation</h3>
+    <FormReactRedux formName="specify-validation">
+      <input name="required" placeholder="Required" required/>
+      {/* This field is required */}
+      <input name="alphanumeric" placeholder="Alphanumeric" alphanumeric/>
+      {/* This field is alphanumeric */}
+      <input name="word" placeholder="Only Words" word/>
+      {/* This field is word */}
+      <input name="number" placeholder="Number" number/>
+      {/* This field is number */}
+      <input name="naturalNumber" placeholder="Natural number" naturalnumber/>
+      {/* This field is natural number */}
+      <input name="integer" placeholder="Integer" integer/>
+      {/* This field is integer */}
+      <input name="decimal" placeholder="Decimal" decimal/>
+      {/* This field is decimal */}
+      <input name="email" placeholder="Email" email/>
+      {/* This field is email */}
+      <input name="url" placeholder="Url" url/>
+      {/* This field is url */}
+      <input type="submit" value="Submit"/>
+    </FormReactRedux>
+
+    <h3>Function Validation</h3>
+    <FormReactRedux formName="function-validation">
+      <input name="more-then" placeholder="More then 2 characters" required validation={(value, values) => value.toString().length > 2} errormessage="This field required more then 2 characters"/>
+      <input type="submit" value="Submit"/>
+    </FormReactRedux>
+
+    <h3>Boolean Validation</h3>
+    <FormReactRedux formName="boolean-validation">
+      <input name="always-invalid" placeholder="Always invalid" required validation={false} errormessage="This field always be invalid"/>
+      <input type="submit" value="Submit"/>
+    </FormReactRedux>
+
+    <h3>Style error message</h3>
+    <FormReactRedux formName="style-error-message" styleErrorMessage={{color: 'green'}}>
+      <input name="required" placeholder="Required" required/>
+      <input type="submit" value="Submit"/>
+    </FormReactRedux>
+
+    <h3>Get Values. Submit function only fire in case form is valid if it'snot, see the errors messages.</h3>
+    <FormReactRedux
+      formName="get-values"
+      submit={(values, e) => {
+        console.log('values: ', values);
+        // values: {name: ''}
+      }}
+    >
+      <input name="name" placeholder="Name" required/>
+      <input type="submit" value="Submit"/>
+    </FormReactRedux>
+
+    <h3>Set Values from object</h3>
+    <FormReactRedux formName="set-values" defaultValues={{name: 'Default value'}}>
+      <input name="name" placeholder="Name" required/>
+      <input type="submit" value="Submit"/>
+    </FormReactRedux>
+
+    <h3>Set Value on field</h3>
+    <FormReactRedux formName="set-value">
+      <input name="name" placeholder="Name" defaultValue="Default Value" required/>
+      <input type="submit" value="Submit"/>
+    </FormReactRedux>
+
+    <h3>Set Value on functionality</h3>
+    <button
+      onClick={() => {
+        // defaultValues only if the form have defined
+        let defaultValues = {name: 'TheName', surname: ''};
+        formReactReduxChangeFieldValue('set-value-fn', 'surname', 'TheSurname', defaultValues)
+      }}
+    >
+      Click to add value
+    </button>
+    <FormReactRedux formName="set-value-fn" defaultValues={{name: 'TheName', surname: ''}}>
+      <input name="name" placeholder="Name"/>
+      <input name="surname" placeholder="Surname"/>
+      <input type="submit" value="Submit"/>
+    </FormReactRedux>
+
+    <h3>Default submit values</h3>
+    <FormReactRedux noPreventDefault formName="default-submit-value">
+      <input name="name" placeholder="Name" required/>
+      <input type="submit" value="Submit"/>
+    </FormReactRedux>
+
+
+    <h3>History. Undo (Ctrl-Z). Redo (Ctrl-Shift-Z or Ctrl-Y)</h3>
+    <button onClick={() => {formReactReduxUndo("history")}}>Undo</button>
+    <button onClick={() => {formReactReduxRedo("history")}}>Redo</button>
+    <button onClick={() => {formReactReduxReset("history")}}>Reset this form</button>
+    <button onClick={() => {formReactReduxReset()}}>Reset all</button>
+    
+    <FormReactRedux noPreventDefault formName="history">
+      <input name="name" placeholder="Name" required/>
+      <input name="surname" placeholder="Surname" required/>
+      <input type="submit" value="Submit"/>
+    </FormReactRedux>
+
+  </div>
+);
 
 
 const mapStateToProps = store => {
