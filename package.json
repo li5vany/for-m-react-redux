@@ -1,7 +1,8 @@
 {
   "name": "form-react-redux",
   "version": "0.1.0",
-  "private": true,
+  "description": "Ease way to build fast and simple forms in react isomorphic application",
+  "main": "index.js",
   "dependencies": {
     "react": "^16.5.0",
     "react-dom": "^16.5.0",
@@ -15,7 +16,22 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/li5vany/form-react-redux.git"
+  },
+  "keywords": [
+    "form",
+    "react",
+    "redux"
+  ],
   "devDependencies": {
     "redux-devtools": "^3.4.1"
-  }
+  },
+  "author": "Lisvany Alonso",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/li5vany/form-react-redux/issues"
+  },
+  "homepage": "https://github.com/li5vany/form-react-redux#readme"
 }
