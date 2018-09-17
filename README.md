@@ -9,9 +9,7 @@ Ease way to build fast and simple forms in react isomorphic application.
 
 **Install**
 
-clone repo
-
-`npm install`
+clone repo or `npm install @li5vany/for-m-react-redux`
 
 **Run**
 
