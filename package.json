@@ -1,5 +1,5 @@
 {
-  "name": "for-m-react-redux",
+  "name": "@li5vany/for-m-react-redux",
   "version": "0.1.0",
   "description": "Ease way to build fast and simple forms in react isomorphic application",
   "main": "index.js",
