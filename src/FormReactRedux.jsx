@@ -5,7 +5,7 @@ import * as types from './types';
 const regex = {
   htmlID: /^[a-zA-Z][\w:.-]*$/g,
   bracket: /\[(.*)\]/i,
-  decimal: /^\d+\.?\d*$/,
+  decimal: /^-?\d+\.?\d*$/,
   email: /^[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i,
   escape: /[-[\]/{}()*+?.\\^$|]/g,
   flags: /^\/(.*)\/(.*)?/,
@@ -13,8 +13,8 @@ const regex = {
   naturalNumber: /^\d+$/,
   number: /^-?\d*(\.\d+)?$/,
   url: /(https?:\/\/(?:www\.|(?!www))[^\s.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})/i,
-  alphanumeric: /^[\w\d.\-+,:/\\!?]+$/i,
-  word: /^\w+$/i
+  alphanumeric: /^[\w\d.\-+,:/\\¡!¿?]+$/i,
+  word: /^[a-z,:.¡!¿?]+$/i
 };
 
 const adjustOffset = (el, offset) => {
@@ -35,9 +35,10 @@ export const getValueFromFormReactRedux = (formName, formReactRedux, value, type
 
 export const getUniqueKey = () => Math.floor(Math.random() * 10000) + '' + Math.floor(Math.random() * 10000);
 
-// TODO: checkbox not notification onchange when edit other form
-const FormReactRedux = ({children, formName, defaultValues, submit, onChange, language, formReactRedux, formReactReduxOnChange, formReactReduxUndo, formReactReduxRedo}) => {
-  console.log('formReactRedux', formReactRedux);
+
+const FormReactRedux = (props) => {
+  let {children, formName, defaultValues, submit, noPreventDefault, onChange, language, styleErrorMessage, formReactRedux, formReactReduxOnChange, formReactReduxUndo, formReactReduxRedo} = props;
+  // console.log('formReactRedux', formReactRedux);
 
   let values = getValueFromFormReactRedux(formName, formReactRedux, 'values', 'object', defaultValues && typeof defaultValues === "object" ? defaultValues : {}),
     errors = getValueFromFormReactRedux(formName, formReactRedux, 'errors', 'object', {}),
@@ -103,7 +104,7 @@ const FormReactRedux = ({children, formName, defaultValues, submit, onChange, la
     }
   };
 
-  if (window) {
+  if (window && focus) {
     window.onkeyup = (e) => {
       if (e.ctrlKey && ((e.keyCode === 90 && e.shiftKey) || e.keyCode === 89)) {
         formReactReduxRedo(formName);
@@ -135,24 +136,46 @@ const FormReactRedux = ({children, formName, defaultValues, submit, onChange, la
   };
 
   const initValidation = (item, tag) => {
+    const getErrorMessage = (msg) => item.props.errormessage ? item.props.errormessage : msg;
+
     if (item.props.required) {
-      validation[tag] = {required: true};
+      validation[tag] = {required: true, errorMessage: getErrorMessage('This is required')};
     }
-    if (item.props.pattern) {
-      validation[tag] = {...validation[tag], pattern: item.props.pattern, errorMessage: item.props.errormessage};
+    if (typeof item.props.validation === 'function' || typeof item.props.validation === 'boolean') {
+      validation[tag] = {...validation[tag], validation: item.props.validation, errorMessage: getErrorMessage('This field is wrong')};
+    } else if (item.props.pattern) {
+      validation[tag] = {...validation[tag], pattern: item.props.pattern, errorMessage: getErrorMessage('This field is wrong')};
     } else {
       if (item.props.type === 'number') {
-        validation[tag] = {...validation[tag], regex: 'number', errorMessage: 'This field most be number'};
-        if (item.props.naturalNumber) {
-          validation[tag] = {...validation[tag], regex: 'naturalNumber', errorMessage: 'This field most be natural number'};
+        validation[tag] = {...validation[tag], regex: 'number', errorMessage: getErrorMessage('This field most be number')};
+        if (item.props.naturalnumber) {
+          validation[tag] = {...validation[tag], regex: 'naturalNumber', errorMessage: getErrorMessage('This field most be natural number')};
+        } else if (item.props.decimal) {
+          validation[tag] = {...validation[tag], regex: 'decimal', errorMessage: getErrorMessage('This field most be decimal number')};
+        } else if (item.props.integer) {
+          validation[tag] = {...validation[tag], regex: 'integer', errorMessage: getErrorMessage('This field most be integer number')};
         }
       } else if (item.props.type === 'email') {
-        validation[tag] = {...validation[tag], regex: 'email', errorMessage: 'This field most be email'};
+        validation[tag] = {...validation[tag], regex: 'email', errorMessage: getErrorMessage('This field most be email')};
+      } else if (item.props.type === 'url') {
+        validation[tag] = {...validation[tag], regex: 'url', errorMessage: getErrorMessage('This field most be url')};
       } else {
         if (item.props.alphanumeric) {
-          validation[tag] = {...validation[tag], regex: 'alphanumeric', errorMessage: 'This field most be alphanumeric'};
+          validation[tag] = {...validation[tag], regex: 'alphanumeric', errorMessage: getErrorMessage('This field most be alphanumeric')};
         } else if (item.props.word) {
-          validation[tag] = {...validation[tag], regex: 'word', errorMessage: 'This field most be words'};
+          validation[tag] = {...validation[tag], regex: 'word', errorMessage: getErrorMessage('This field most be words')};
+        } else if (item.props.decimal) {
+          validation[tag] = {...validation[tag], regex: 'decimal', errorMessage: getErrorMessage('This field most be decimal number')};
+        } else if (item.props.integer) {
+          validation[tag] = {...validation[tag], regex: 'integer', errorMessage: getErrorMessage('This field most be integer number')};
+        } else if (item.props.naturalnumber) {
+          validation[tag] = {...validation[tag], regex: 'naturalNumber', errorMessage: getErrorMessage('This field most be natural number')};
+        } else if (item.props.number) {
+          validation[tag] = {...validation[tag], regex: 'number', errorMessage: getErrorMessage('This field most be number')};
+        } else if (item.props.email) {
+          validation[tag] = {...validation[tag], regex: 'email', errorMessage: getErrorMessage('This field most be email')};
+        } else if (item.props.url) {
+          validation[tag] = {...validation[tag], regex: 'url', errorMessage: getErrorMessage('This field most be url')};
         }
       }
     }
@@ -166,9 +189,15 @@ const FormReactRedux = ({children, formName, defaultValues, submit, onChange, la
     if (validation[name]) {
       const genericWrongText = getText('This field is wrong');
       if (!values[name] && validation[name].required === true) {
-        errors[name] = getText("This field is required");
-      } else if ((values[name] && validation[name].required) || !validation[name].required) {
-        if (validation[name].pattern) {
+        errors[name] = getText(validation[name].errorMessage);
+      } else if (values[name]) {
+        if (typeof validation[name].validation !== 'undefined') {
+          if (typeof validation[name].validation === 'function') {
+            errors[name] = validation[name].validation(values[name], values) ? '' : (validation[name].errorMessage ? getText(validation[name].errorMessage) : genericWrongText);
+          } else if (typeof validation[name].validation === 'boolean') {
+            errors[name] = validation[name].validation ? '' : (validation[name].errorMessage ? getText(validation[name].errorMessage) : genericWrongText);
+          }
+        } else if (validation[name].pattern) {
           errors[name] = validation[name].pattern.test(values[name]) ? '' : (validation[name].errorMessage ? getText(validation[name].errorMessage) : genericWrongText);
         } else if (validation[name].regex) {
           errors[name] = isValidFn(validation[name].regex, name) ? '' : (validation[name].errorMessage ? getText(validation[name].errorMessage) : genericWrongText);
@@ -183,8 +212,14 @@ const FormReactRedux = ({children, formName, defaultValues, submit, onChange, la
     if (validation[name]) {
       if (!values[name] && validation[name].required === true) {
         return false;
-      } else if ((values[name] && validation[name].required) || !validation[name].required) {
-        if (validation[name].pattern) {
+      } else if (values[name]) {
+        if (typeof validation[name].validation !== 'undefined') {
+          if (typeof validation[name].validation === 'function') {
+            return validation[name].validation(values[name], values);
+          } else if (typeof validation[name].validation === 'boolean') {
+            return validation[name].validation;
+          }
+        } else if (validation[name].pattern) {
           return validation[name].pattern.test(values[name]);
         } else if (validation[name].regex) {
           return isValidFn(validation[name].regex, name);
@@ -213,7 +248,9 @@ const FormReactRedux = ({children, formName, defaultValues, submit, onChange, la
       } else {
         tag = 'name-' + getUniqueKey();
       }
-      if (values[tag]) {
+      if (typeof values[tag] === 'undefined' && typeof item.props.defaultValue !== 'undefined') {
+        values[tag] = item.props.defaultValue;
+      } else if (typeof values[tag] !== 'undefined') {
         values[tag] = values[tag];
       } else if (isCheckbox && item.props.value) {
         values[tag] = item.props.value;
@@ -326,7 +363,7 @@ const FormReactRedux = ({children, formName, defaultValues, submit, onChange, la
       if (item.props && item.props.noerrormessage) {
         return React.cloneElement(item, object);
       }
-      return [React.cloneElement(item, object), <span key={getUniqueKey()} className="text-alert">{errors && errors[tag] && blurs && blurs[tag] ? errors[tag] : <span>&nbsp;</span>}</span>];
+      return [React.cloneElement(item, object), <span key={getUniqueKey()} style={styleErrorMessage} className="text-alert">{errors && errors[tag] && blurs && blurs[tag] ? errors[tag] : <span>&nbsp;</span>}</span>];
     }
     return React.cloneElement(item, object);
   };
@@ -343,30 +380,29 @@ const FormReactRedux = ({children, formName, defaultValues, submit, onChange, la
     });
   };
 
-  return (
-    <div>
-      {formName ?
-        <form
-          className="form"
-          onSubmit={(e) => {
-            e.preventDefault();
-            if (isValid) {
-              if (submit) {
-                submit(values, e);
-              }
-            } else {
-              for (let i in values) {
-                blurs[i] = true;
-                validationFn(i);
-              }
-              doTheChange();
-            }
-          }}>
-          {childrenMap(Array.isArray(children) ? children : [children])}
-        </form>
-        : <div>►Please declare a name for this form‼</div>}
-    </div>
-  );
+
+  const form = formName ? <form
+    {...props}
+    onSubmit={(e) => {
+      if (!noPreventDefault) {
+        e.preventDefault();
+        if (isValid) {
+          if (submit) {
+            submit(values, e);
+          }
+        } else {
+          for (let i in values) {
+            blurs[i] = true;
+            validationFn(i);
+          }
+          doTheChange();
+        }
+      }
+    }}>
+    {childrenMap(Array.isArray(children) ? children : [children])}
+  </form> : <div>►Please declare a name for this form‼</div>;
+
+  return (form);
 };
 
 const mapStateToProps = store => {

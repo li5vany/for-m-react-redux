@@ -29,19 +29,15 @@ export const reducers = {
               }
             }
           }
-          let tmpValue;
           if (typeof value === 'string') {
             if (value === 'true') {
-              tmpValue = true;
+              value = true;
             } else if (value === 'false') {
-              tmpValue = false;
+              value = false;
             } else if (/^-?\d*(\.\d+)?$/.test(value)) {
-              tmpValue = parseFloat(value);
+              value = parseFloat(value);
             } else if (/^-?\d+$/.test(value)) {
-              tmpValue = parseInt(value, 10);
-            }
-            if (typeof tmpValue === 'undefined') {
-              return state;
+              value = parseInt(value, 10);
             }
           }
           lastValues[name] = values[name];
