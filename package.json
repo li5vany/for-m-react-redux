@@ -28,7 +28,7 @@
   "devDependencies": {
     "redux-devtools": "^3.4.1"
   },
-  "author": "Lisvany Alonso",
+  "author": "li5vany",
   "license": "GNU General Public License v3.0",
   "bugs": {
     "url": "https://github.com/li5vany/form-react-redux/issues"
