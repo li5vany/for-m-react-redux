@@ -145,7 +145,7 @@ const App = () => (
 
 **Handle values**
 
-- Get Values. Submit function only fire in case form is valid if it'snot, see the errors messages.
+- Get Values. Submit function only fire in case form is valid if it's not then see the errors messages.
 ```
 <FormReactRedux
   formName="get-values"
