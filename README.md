@@ -1,6 +1,6 @@
 # for-m-react-redux
 
-Ease way to build fast and simple forms in react isomorphic application.
+Easy way to build fast and simple forms in react isomorphic application.
 
 **Dependencies**
 
@@ -9,28 +9,36 @@ Ease way to build fast and simple forms in react isomorphic application.
 
 **Install**
 
-clone repo or `npm install @li5vany/for-m-react-redux`
-
-**Run**
+clone repo
+ 
+`npm install`
 
 `npm start`
+
+or
+ 
+`npm install @li5vany/for-m-react-redux`
+
+Import reducers and combine
+
+`import {reducers} from '@li5vany/for-m-react-redux'`
 
 **Simple Form**
 
 ```
 import React from 'react';
-import FormReactRedux from './FormReactRedux';
+import {FormReactRedux} from '@li5vany/for-m-react-redux';
 
 const App = () => (
     <FormReactRedux
         formName="simple-form"
-        defaultValues={{name: 'Ease way to build...'}}
+        defaultValues={{name: 'Easy way to build...'}}
         submit={(values, e) => {
           console.log('values: ', values);
-          // values: {name: 'Ease way to build...'}
+          // values: {name: 'Easy way to build...'}
         }}
     >
-        <input name="name" placeholder="Ease way to build..." required/>
+        <input name="name" placeholder="Easy way to build..." required/>
         <input type="submit" value="Submit"/>
     </FormReactRedux>
 )
@@ -151,7 +159,7 @@ const App = () => (
   formName="get-values"
   submit={(values, e) => {
     console.log('values: ', values);
-    // values: {name: 'Ease way to build...'}
+    // values: {name: 'Easy way to build...'}
   }}
 >
   <input name="name" placeholder="Name" required/>
@@ -179,7 +187,7 @@ const App = () => (
 ```
 import React from 'react';
 import {connect} from 'react-redux';
-import FormReactRedux from './FormReactRedux';
+import {FormReactRedux, types} from '@li5vany/for-m-react-redux';
 
 const App = ({formReactReduxChangeFieldValue}) => (
   <div>
@@ -221,7 +229,7 @@ connect(undefined, mapDispatchProps)(App);
 ```
 import React from 'react';
 import {connect} from 'react-redux';
-import FormReactRedux from './FormReactRedux';
+import {FormReactRedux, types} from '@li5vany/for-m-react-redux';
 
 const App = ({formReactReduxUndo, formReactReduxRedo, formReactReduxReset}) => (
   <div>
