@@ -1,6 +1,6 @@
 # for-m-react-redux
 
-Easy way to build fast and simple forms in react isomorphic application.
+A quick and easy way to build forms in React for an isomorphic application.
 
 **Dependencies**
 
