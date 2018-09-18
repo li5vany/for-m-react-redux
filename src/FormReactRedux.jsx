@@ -380,9 +380,18 @@ const FormReactRedux = (props) => {
     });
   };
 
+  const getProps = (props) => {
+    let tmp = {};
+    for (let i in props) {
+      if (i !== 'formName' && i !== 'defaultValues' && i !== 'submit' && i !== 'noPreventDefault') {
+        tmp[i] = props[i]
+      }
+    }
+    return tmp;
+  };
 
   const form = formName ? <form
-    {...props}
+    {...getProps(props)}
     onSubmit={(e) => {
       if (!noPreventDefault) {
         e.preventDefault();
