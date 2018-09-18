@@ -136,7 +136,7 @@ const FormReactRedux = (props) => {
   };
 
   const initValidation = (item, tag) => {
-    const getErrorMessage = (msg) => item.props.errormessage ? item.props.errormessage : msg;
+    const getErrorMessage = (msg) => item.props.errorMessage ? item.props.errorMessage : msg;
 
     if (item.props.required) {
       validation[tag] = {required: true, errorMessage: getErrorMessage('This is required')};
@@ -148,7 +148,7 @@ const FormReactRedux = (props) => {
     } else {
       if (item.props.type === 'number') {
         validation[tag] = {...validation[tag], regex: 'number', errorMessage: getErrorMessage('This field most be number')};
-        if (item.props.naturalnumber) {
+        if (item.props.naturalNumber) {
           validation[tag] = {...validation[tag], regex: 'naturalNumber', errorMessage: getErrorMessage('This field most be natural number')};
         } else if (item.props.decimal) {
           validation[tag] = {...validation[tag], regex: 'decimal', errorMessage: getErrorMessage('This field most be decimal number')};
@@ -168,7 +168,7 @@ const FormReactRedux = (props) => {
           validation[tag] = {...validation[tag], regex: 'decimal', errorMessage: getErrorMessage('This field most be decimal number')};
         } else if (item.props.integer) {
           validation[tag] = {...validation[tag], regex: 'integer', errorMessage: getErrorMessage('This field most be integer number')};
-        } else if (item.props.naturalnumber) {
+        } else if (item.props.naturalNumber) {
           validation[tag] = {...validation[tag], regex: 'naturalNumber', errorMessage: getErrorMessage('This field most be natural number')};
         } else if (item.props.number) {
           validation[tag] = {...validation[tag], regex: 'number', errorMessage: getErrorMessage('This field most be number')};
@@ -361,7 +361,7 @@ const FormReactRedux = (props) => {
         }
       };
       let element = React.createElement(item.type, {...(item.props ? getProps(item.props) : {}), ...object}, ...(item.children ? item.children : {}));
-      if (item.props && item.props.noerrormessage) {
+      if (item.props && item.props.noErrorMessage) {
         return element;
       }
       return [element, <span key={getUniqueKey()} style={styleErrorMessage} className="text-alert">{errors && errors[tag] && blurs && blurs[tag] ? errors[tag] : <span>&nbsp;</span>}</span>];
@@ -384,7 +384,7 @@ const FormReactRedux = (props) => {
   const getProps = (props) => {
     let tmp = {};
     for (let i in props) {
-      if (!(/defaultValue|formName|formReactRedux|styleErrorMessage|formReactReduxOnChange|defaultValues|submit|noPreventDefault|formReactReduxReset|formReactReduxUndo|formReactReduxRedo|alphanumeric|word|number|integer|decimal|email|url|validation/i.test(i))) {
+      if (!(/errorMessage|required|naturalNumber|noErrorMessage|defaultValue|formName|formReactRedux|styleErrorMessage|formReactReduxOnChange|defaultValues|submit|noPreventDefault|formReactReduxReset|formReactReduxUndo|formReactReduxRedo|alphanumeric|word|number|integer|decimal|email|url|validation/i.test(i))) {
         tmp[i] = props[i]
       }
     }

@@ -75,7 +75,7 @@ const App = () => (
     - define one validation message
     ```
     <FormReactRedux formName="define-one-validation-message">
-      <input name="name" placeholder="Required" required errormessage="Required"/>
+      <input name="name" placeholder="Required" required errorMessage="Required"/>
       {/* Required */}
       <input type="submit" value="Submit"/>
     </FormReactRedux>
@@ -116,7 +116,7 @@ const App = () => (
       {/* This field is word */}
       <input name="number" placeholder="Number" number/>
       {/* This field is number */}
-      <input name="naturalNumber" placeholder="Natural number" naturalnumber/>
+      <input name="naturalNumber" placeholder="Natural number" naturalNumber/>
       {/* This field is natural number */}
       <input name="integer" placeholder="Integer" integer/>
       {/* This field is integer */}
@@ -132,14 +132,14 @@ const App = () => (
     - Function Validation
     ```
     <FormReactRedux formName="function-validation">
-      <input name="more-then" placeholder="More then 2 characters" validation={(value, values) => value.toString().length > 2} errormessage="This field required more then 2 characters"/>
+      <input name="more-then" placeholder="More then 2 characters" validation={(value, values) => value.toString().length > 2} errorMessage="This field required more then 2 characters"/>
       <input type="submit" value="Submit"/>
     </FormReactRedux>
     ```
     - Boolean Validation
     ```
     <FormReactRedux formName="boolean-validation">
-      <input name="always-invalid" placeholder="Always invalid" required validation={false} errormessage="This field always be invalid"/>
+      <input name="always-invalid" placeholder="Always invalid" required validation={false} errorMessage="This field always be invalid"/>
       <input type="submit" value="Submit"/>
     </FormReactRedux>
     ```

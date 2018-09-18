@@ -48,15 +48,15 @@ onChange={
 }>
 <div className="container">
   Level 1 &nbsp;
-<input name="text" placeholder="Text" required errormessage="Number, most be a number" onChange={(e) => {
+<input name="text" placeholder="Text" required errorMessage="Number, most be a number" onChange={(e) => {
 }}/>
 <div className="level">
   <label>
-  <input type="radio" name="radio" value="option-1" noerrormessage="true"/>
+  <input type="radio" name="radio" value="option-1" noErrorMessage="true"/>
   &nbsp;Level 2 => Option 1
 </label>&nbsp;&nbsp;&nbsp;
 <label>
-  <input type="radio" name="radio" value="option-2" noerrormessage="true"/>
+  <input type="radio" name="radio" value="option-2" noErrorMessage="true"/>
   &nbsp;Level 2 => Option 2
 </label>
 <div className="level">
@@ -64,7 +64,7 @@ onChange={
 <input type="file" name="file"/>
 <br/>
 <div className="level">
-  <input type="checkbox" name="checkbox" noerrormessage="true"/> Level 4
+  <input type="checkbox" name="checkbox" noErrorMessage="true"/> Level 4
 </div>
 <div className="level">
   <span>Level 6</span> &nbsp;
