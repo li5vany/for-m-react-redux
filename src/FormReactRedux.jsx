@@ -360,10 +360,11 @@ const FormReactRedux = (props) => {
           }
         }
       };
+      let element = React.createElement(item.type, {...(item.props ? getProps(item.props) : {}), ...object}, ...(item.children ? item.children : {}));
       if (item.props && item.props.noerrormessage) {
-        return React.cloneElement(item, object);
+        return element;
       }
-      return [React.cloneElement(item, object), <span key={getUniqueKey()} style={styleErrorMessage} className="text-alert">{errors && errors[tag] && blurs && blurs[tag] ? errors[tag] : <span>&nbsp;</span>}</span>];
+      return [element, <span key={getUniqueKey()} style={styleErrorMessage} className="text-alert">{errors && errors[tag] && blurs && blurs[tag] ? errors[tag] : <span>&nbsp;</span>}</span>];
     }
     return React.cloneElement(item, object);
   };
@@ -383,7 +384,7 @@ const FormReactRedux = (props) => {
   const getProps = (props) => {
     let tmp = {};
     for (let i in props) {
-      if (i !== 'formName' && i !== 'defaultValues' && i !== 'submit' && i !== 'noPreventDefault') {
+      if (!(/defaultValue|formName|formReactRedux|styleErrorMessage|formReactReduxOnChange|defaultValues|submit|noPreventDefault|formReactReduxReset|formReactReduxUndo|formReactReduxRedo|alphanumeric|word|number|integer|decimal|email|url|validation/i.test(i))) {
         tmp[i] = props[i]
       }
     }
