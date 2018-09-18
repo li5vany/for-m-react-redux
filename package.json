@@ -4,8 +4,8 @@
   "description": "Ease way to build fast and simple forms in react isomorphic application",
   "main": "index.js",
   "dependencies": {
-    "react": "^16.5.0",
-    "react-dom": "^16.5.0",
+    "react": "^16.5.1",
+    "react-dom": "^16.5.1",
     "react-redux": "^5.0.7",
     "react-scripts": "1.1.5",
     "redux": "^4.0.0"
@@ -30,7 +30,7 @@
     "redux-devtools": "^3.4.1"
   },
   "author": "li5vany",
-  "license": "GNU General Public License v3.0",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/li5vany/for-m-react-redux/issues"
   },
