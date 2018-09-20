@@ -35,7 +35,7 @@ import FormReactRedux, {getValueFromFormReactRedux, getUniqueKey} from './FormRe
 <FormReactRedux
 formName="form-test"
 defaultValues={{text: 'This is a text', radio: 'option-2', checkbox: true}}
-language={{'This field is required': 'This field is required'}}
+errorMessages={{'This field is required': 'This field is required'}}
 submit={
 (values, e) => {
   console.log(values);

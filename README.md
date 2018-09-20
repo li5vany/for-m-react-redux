@@ -65,7 +65,7 @@ const App = () => (
     ```
     <FormReactRedux
         formName="define-validation-messages"
-        language={{"This field is required": "Este campo es obligatorio"}}
+        errorMessages={{"This field is required": "Este campo es obligatorio"}}
     >
         <input name="required" placeholder="Required" required/>
         {/* Este campo es obligatorio */}

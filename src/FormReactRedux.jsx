@@ -37,7 +37,7 @@ export const getUniqueKey = () => Math.floor(Math.random() * 10000) + '' + Math.
 
 
 const FormReactRedux = (props) => {
-  let {children, formName, defaultValues, submit, noPreventDefault, onChange, language, styleErrorMessage, formReactRedux, formReactReduxOnChange, formReactReduxUndo, formReactReduxRedo} = props;
+  let {children, formName, defaultValues, submit, noPreventDefault, onChange, errorMessages, styleErrorMessage, formReactRedux, formReactReduxOnChange, formReactReduxUndo, formReactReduxRedo} = props;
   // console.log('formReactRedux', formReactRedux);
 
   let values = getValueFromFormReactRedux(formName, formReactRedux, 'values', 'object', defaultValues && typeof defaultValues === "object" ? defaultValues : {}),
@@ -181,7 +181,7 @@ const FormReactRedux = (props) => {
     }
   };
 
-  const getText = (message) => message && language && language[message] ? language[message] : message;
+  const getText = (message) => message && errorMessages && errorMessages[message] ? errorMessages[message] : message;
 
   const isValidFn = (tag, name) => regex[tag].test(values[name]);
 
