@@ -2,10 +2,11 @@ import React from 'react';
 import {connect} from 'react-redux';
 import * as types from './types';
 import logo from './logo.svg';
-import FormReactRedux from './FormReactRedux';
+import FormReactRedux, {getValueFromFormReactRedux} from './FormReactRedux';
 import './App.css';
+import ShowValues from "./ShowValues";
 
-const App = ({formReactReduxChangeFieldValue, formReactReduxUndo, formReactReduxRedo, formReactReduxReset}) => (
+const App = ({formReactReduxChangeFieldValue, formReactReduxUndo, formReactReduxRedo, formReactReduxReset, formReactRedux, showData, showDataFn}) => (
   <div className="App">
     <header className="App-header">
       <img src={logo} className="App-logo" alt="logo"/>
@@ -113,11 +114,15 @@ const App = ({formReactReduxChangeFieldValue, formReactReduxUndo, formReactRedux
       submit={(values, e) => {
         console.log('values: ', values);
         // values: {name: ''}
+        showDataFn(true)
       }}
     >
       <input name="name" placeholder="Name" required/>
+      <input name="surname" placeholder="Surname" required/>
+      {showData && <ShowValues values={getValueFromFormReactRedux("get-values", formReactRedux, 'values', 'object', {})}/>}
       <input type="submit" value="Submit"/>
     </FormReactRedux>
+
 
     <h3>Set Values from object</h3>
     <FormReactRedux formName="set-values" defaultValues={{name: 'Default value'}}>
@@ -172,7 +177,8 @@ const App = ({formReactReduxChangeFieldValue, formReactReduxUndo, formReactRedux
 
 const mapStateToProps = store => {
   return {
-    formReactRedux: store.formReactRedux
+    formReactRedux: store.formReactRedux,
+    showData: store.showData
   };
 };
 
@@ -189,6 +195,9 @@ const mapDispatchProps = dispatch => {
     },
     formReactReduxRedo: (formName) => {
       dispatch({type: types.FORM_REACT_REDUX_REDO, formName})
+    },
+    showDataFn: (value) => {
+      dispatch({type: value ? types.SHOW_DATA : types.HIDE_DATA})
     }
   }
 };

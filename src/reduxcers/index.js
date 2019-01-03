@@ -79,10 +79,16 @@ export const reducers = {
         return state
     }
   },
-  test: (state = "test", action) => {
+  showData: (state = false, action) => {
     switch (action.type) {
+      case types.SHOW_DATA:
+        return true;
+      case types.HIDE_DATA:
+        return false;
+      case types.TOGGLE_DATA:
+        return !state;
       default:
-        return state
+        return false
     }
   }
 };
