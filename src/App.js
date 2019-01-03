@@ -159,8 +159,8 @@ const App = ({formReactReduxChangeFieldValue, formReactReduxUndo, formReactRedux
     <button onClick={() => {formReactReduxRedo("history")}}>Redo</button>
     <button onClick={() => {formReactReduxReset("history")}}>Reset this form</button>
     <button onClick={() => {formReactReduxReset()}}>Reset all</button>
-    
-    <FormReactRedux noPreventDefault formName="history">
+
+    <FormReactRedux formName="history">
       <input name="name" placeholder="Name" required/>
       <input name="surname" placeholder="Surname" required/>
       <input type="submit" value="Submit"/>
